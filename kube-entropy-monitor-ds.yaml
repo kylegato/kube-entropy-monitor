@@ -1,0 +1,37 @@
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  labels:
+    app: kube-entropy-monitor
+  name: kube-entropy-monitor
+  namespace: kube-system
+spec:
+  template:
+    metadata:
+      labels:
+        app: kube-entropy-monitor
+      name: kube-entropy-monitor
+    spec:
+      containers:
+      - env:
+        - name: MY_NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        image: quay.io/kylegato/kube-entropy-monitor:latest
+        imagePullPolicy: Always
+        name: kube-entropy-monitor
+        resources:
+          limits:
+            cpu: 250m
+            memory: 40Mi
+          requests:
+            cpu: 64m
+            memory: 20Mi
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      tolerations:
+      - operator: Exists
