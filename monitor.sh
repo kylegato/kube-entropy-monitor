@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Choose our lookup tool, in this case we will use the host command
+# Locate the cat tool
 CAT_TOOL_BIN=`which cat`
 # ENTROPY SOURCE FILE
 ENTROPY_FILE=/proc/sys/kernel/random/entropy_avail
